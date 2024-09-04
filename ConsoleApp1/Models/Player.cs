@@ -37,9 +37,9 @@
         {
             switch (direction)
             {
-                case ConsoleKey.UpArrow:
-                    return position.Y > 0;
                 case ConsoleKey.DownArrow:
+                    return position.Y > 0;
+                case ConsoleKey.UpArrow:
                     return position.Y < game.FieldsPerDirection - 1;
                 case ConsoleKey.LeftArrow:
                     return position.X > 0;
@@ -59,10 +59,10 @@
                 switch (direction)
                 {
                     case ConsoleKey.UpArrow:
-                        nextPosition.Y -= 1;
+                        nextPosition.Y += 1;
                         break;
                     case ConsoleKey.DownArrow:
-                        nextPosition.Y += 1;
+                        nextPosition.Y -= 1;
                         break;
                     case ConsoleKey.LeftArrow:
                         nextPosition.X -= 1;

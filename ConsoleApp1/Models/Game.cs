@@ -6,7 +6,7 @@
         private const int MineProbability = 30;
         private Player _player { get; init; }
         private bool _isPlayerAlive => _player.RemainingLives > 0;
-        private bool _isPlayerNotAtGoal => _player.CurrentPosition.Y != FieldsPerDirection;
+        private bool _isPlayerNotAtGoal => _player.CurrentPosition.Y != (FieldsPerDirection - 1);
 
         private ConsoleKey[] _allowedKeys =
         {
@@ -19,7 +19,7 @@
         public Game()
         {
             Mines = GenerateMineField();
-            _player = new Player(0, 0);
+            _player = new Player(0,  0);
         }
 
         public readonly int FieldsPerDirection = 8;
@@ -71,7 +71,7 @@
             bool[,] mines = new bool[FieldsPerDirection, FieldsPerDirection];
             for (var i = 0; i < FieldsPerDirection; i++)
             {
-                for (var j = 0; j < FieldsPerDirection; j++)
+                for (var j = FieldsPerDirection - 1; j > 0; j--)
                 {
                     mines[i, j] = random.Next(0, 100) < MineProbability;
                 }
