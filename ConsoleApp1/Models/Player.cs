@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleApp1.Models
+﻿namespace ConsoleApp1.Models
 {
     public class Player(int startPositionX, int startPositionXY)
     {
@@ -58,7 +52,7 @@ namespace ConsoleApp1.Models
 
         private Position Move(Game game, ConsoleKey direction)
         {
-            Position nextPosition = CurrentPosition;
+            var nextPosition = new Position(CurrentPosition.X, CurrentPosition.Y);
 
             if (IsMoveValid(nextPosition, game, direction))
             {

@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConsoleApp1.Models
+﻿namespace ConsoleApp1.Models
 {
     public class Game
     {
@@ -13,7 +6,7 @@ namespace ConsoleApp1.Models
         private const int MineProbability = 30;
         private Player _player { get; init; }
         private bool _isPlayerAlive => _player.RemainingLives > 0;
-        private bool _isPlayerNotAtGoal => _player.CurrentPosition.Y != (FieldsPerDirection);
+        private bool _isPlayerNotAtGoal => _player.CurrentPosition.Y != FieldsPerDirection;
 
         private ConsoleKey[] _allowedKeys =
         {
@@ -81,10 +74,6 @@ namespace ConsoleApp1.Models
                 for (var j = 0; j < FieldsPerDirection; j++)
                 {
                     mines[i, j] = random.Next(0, 100) < MineProbability;
-                    if (mines[i, j])
-                    {
-                        Console.WriteLine($"Position of the Mine{i}: {i}{j}");
-                    }
                 }
             }
 
