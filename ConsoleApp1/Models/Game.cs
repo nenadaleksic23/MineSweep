@@ -19,7 +19,7 @@
         public Game()
         {
             Mines = GenerateMineField();
-            _player = new Player(0,  0);
+            _player = new Player(0, 0);
         }
 
         public readonly int FieldsPerDirection = 8;
@@ -35,8 +35,15 @@
                 Console.WriteLine($"Total moves: {_player.TotalMoves}");
                 Console.WriteLine("---------------------------------------------");
 
-                var directions = GetDirectionInput();
-                _player.Play(this, directions);
+                ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+
+                if (!_allowedKeys.Any(key => key == keyInfo.Key))
+                {
+                    Console.WriteLine("Error: Invalid key. Please press an arrow key.");
+                    continue;
+                }
+
+                _player.Play(this, keyInfo.Key);
             }
             while (_isPlayerAlive && _isPlayerNotAtGoal);
 
@@ -50,18 +57,6 @@
             Console.WriteLine($"Lifes: {_player.RemainingLives}");
             Console.WriteLine($"Total moves: {_player.TotalMoves}");
 
-        }
-
-        private ConsoleKey GetDirectionInput()
-        {
-            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
-
-            if (!_allowedKeys.Any(key => key == keyInfo.Key))
-            {
-                Console.WriteLine("Error: Invalid key. Please press an arrow key.");
-            }
-
-            return keyInfo.Key;
         }
 
         private bool[,] GenerateMineField()
