@@ -1,10 +1,9 @@
 ﻿namespace ConsoleApp1.Models
 {
-    public class Square
+    public class Square(int X, int Y, bool hasMine) : Position(X, Y)
     {
         private bool _hasMineExploded { get; set; }
-        public int X { get; init; }
-        public int Y { get; init; }
+        public bool HasMine { get; init; } = hasMine;
 
         public bool CanNavigateToSquare()
         {

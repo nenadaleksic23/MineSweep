@@ -30,7 +30,7 @@
             do
             {
                 Console.WriteLine("---------------------------------------------");
-                Console.WriteLine($"Current player position: {Alphabet[_player.CurrentPosition.X]}-{_player.CurrentPosition.Y}");
+                Console.WriteLine($"Current player position: {Alphabet[_player.CurrentPosition.X]}-{_player.CurrentPosition.Y + 1}");
                 Console.WriteLine($"Lifes left: {_player.RemainingLives}");
                 Console.WriteLine($"Total moves: {_player.TotalMoves}");
                 Console.WriteLine("---------------------------------------------");
