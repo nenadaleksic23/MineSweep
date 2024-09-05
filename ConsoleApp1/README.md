@@ -6,7 +6,7 @@
 - **Mines**: Mines are randomly placed on the board. If you move onto a square containing a mine, it will explode. This will cost you one life and the tile will become destroyed, preventing further navigation to that location.
 - **Objective**: The goal is to reach the top line with as many lives remaining as possible and with as few moves as possible.
 
-## Controls
+## Controls 
 
 - **Arrow Keys**: Use the arrow keys on your keyboard to navigate the board.
   - **Up Arrow**: Move up
