@@ -1,6 +1,6 @@
 ﻿using Game.Models;
 
-var player = new Player();
 var mineField = MineFieldGame.GenerateMineField();
+var player = new Player(mineField[0, 0]);
 var game = new MineFieldGame(player, mineField);
 game.Start();

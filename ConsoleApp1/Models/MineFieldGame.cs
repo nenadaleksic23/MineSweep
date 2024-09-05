@@ -14,7 +14,7 @@
         };
 
         public Player Player { get; init; } = player;
-        public const int FieldsPerDirection = 8;
+        public static readonly int FieldsPerDirection = 8;
         public MineField[,] MineFields { get; init; } = mineFields;
         public bool IsQuestCompleted => Player.CurrentPosition.Y == (FieldsPerDirection - 1);
         public bool IsPlayerAlive => Player.RemainingLives > 0;
@@ -47,13 +47,13 @@
         }
 
 
-        public bool IsMoveValid(Position nextPosition)
+        public bool IsMoveValid(MineField nextPosition)
         {
             return nextPosition.X >= 0 && nextPosition.X < FieldsPerDirection &&
               nextPosition.Y >= 0 && nextPosition.Y < FieldsPerDirection;
         }
 
-        public bool ProcessMove(Position nextPosition)
+        public bool ProcessMove(MineField nextPosition)
         {
             var mineField = MineFields[nextPosition.X, nextPosition.Y];
             if (Player.CurrentPosition.X == nextPosition.X &&

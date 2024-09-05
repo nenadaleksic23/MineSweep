@@ -1,12 +1,12 @@
 ﻿namespace Game.Models
 {
-    public class Player()
+    public class Player(MineField startingPosition)
     {
         private const int TotalLives = 3;
 
         public int RemainingLives { get; private set; } = TotalLives;
         public int TotalMoves { get; private set; }
-        public Position CurrentPosition { get; private set; } = new(0, 0);
+        public MineField CurrentPosition { get; private set; } = startingPosition;
 
         public void Play(MineFieldGame game, ConsoleKey direction)
         {
@@ -30,9 +30,9 @@
             RemainingLives--;
         }
 
-        private Position GetNextPosition(ConsoleKey direction)
+        private MineField GetNextPosition(ConsoleKey direction)
         {
-            var nextPosition = new Position(CurrentPosition.X, CurrentPosition.Y);
+            var nextPosition = new MineField(CurrentPosition.X, CurrentPosition.Y, CurrentPosition.HasMine);
 
             switch (direction)
             {
