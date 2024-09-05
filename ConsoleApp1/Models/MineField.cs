@@ -6,10 +6,5 @@
         public bool HasMine { get; init; } = hasMine;
         public int X { get; set; } = X;
         public int Y { get; set; } = Y;
-
-        public bool CanNavigateToMineField()
-        {
-            return !HasMineExploded;
-        }
     }
 }

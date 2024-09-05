@@ -1,27 +1,27 @@
 using Game.Models;
+using NUnit.Framework;
 
 namespace Game.Tests
 {
     public class MineFieldGameTests
     {
-        Player _player;
-        MineFieldGame _game;
-        private MineField[,] CreateTestMineField(bool shouldMarkAsAlreadyExploded)
+        private Player _player;
+        private MineFieldGame _game;
+
+        private static MineField[,] CreateTestMineField(bool shouldMarkAsAlreadyExploded, params (int x, int y)[] mines)
         {
             var mineField = new MineField[MineFieldGame.FieldsPerDirection, MineFieldGame.FieldsPerDirection];
-
-            // Set a mine at (1, 1)
             for (var i = 0; i < 8; i++)
             {
                 for (var j = 0; j < 8; j++)
                 {
-                    mineField[i, j] = new MineField(i, j, (i == 1 && j == 1))
+                    var hasMine = mines.Contains((i, j));
+                    mineField[i, j] = new MineField(i, j, hasMine)
                     {
                         HasMineExploded = shouldMarkAsAlreadyExploded
                     };
                 }
             }
-
             return mineField;
         }
 
@@ -30,7 +30,6 @@ namespace Game.Tests
         {
             var mineFields = MineFieldGame.GenerateMineField(0);
             var startingPosition = mineFields[0, 0];
-
             _player = new Player(startingPosition);
             _game = new MineFieldGame(_player, mineFields);
         }
@@ -38,13 +37,11 @@ namespace Game.Tests
         [Test]
         public void Player_HitsMine_LosesLife()
         {
-            var mineField = CreateTestMineField(false);
-            _game = new MineFieldGame(_player, mineField);
+            _game = new MineFieldGame(_player, CreateTestMineField(false, (1, 1)));
+            _player.Play(_game, ConsoleKey.RightArrow);
+            _player.Play(_game, ConsoleKey.UpArrow);
 
-            _game.Player.Play(_game, ConsoleKey.RightArrow);
-            _game.Player.Play(_game, ConsoleKey.UpArrow);
-
-            Assert.That(_game.Player.RemainingLives, Is.EqualTo(2));
+            Assert.That(_player.RemainingLives, Is.EqualTo(2));
         }
 
         [Test]
@@ -75,11 +72,9 @@ namespace Game.Tests
         [Test]
         public void Player_CannotMoveUp_FieldAlreadyExploded()
         {
-            var mineFields = CreateTestMineField(true);
-            _game = new MineFieldGame(_player, mineFields);
-
-            _game.Player.Play(_game, ConsoleKey.RightArrow);
-            _game.Player.Play(_game, ConsoleKey.UpArrow);
+            _game = new MineFieldGame(_player, CreateTestMineField(true, (1, 1)));
+            _player.Play(_game, ConsoleKey.RightArrow);
+            _player.Play(_game, ConsoleKey.UpArrow);
 
             Assert.Multiple(() =>
             {
@@ -103,7 +98,7 @@ namespace Game.Tests
                 Assert.That(_player.CurrentPosition.Y, Is.EqualTo(7));
                 Assert.That(_player.RemainingLives, Is.EqualTo(3));
                 Assert.That(_player.TotalMoves, Is.EqualTo(7));
-                Assert.That(_game.IsQuestCompleted, Is.EqualTo(true));
+                Assert.That(_game.IsQuestCompleted, Is.True);
             });
         }
 
@@ -122,19 +117,10 @@ namespace Game.Tests
         }
 
         [Test]
-        public void Player_LoseAllLifes_LoseTheGame()
+        public void Player_LosesAllLives_LosesTheGame()
         {
-            //Crate minefield with 3 mines (0, 1) (0, 2) (0, 3)
-            var mineField = new MineField[MineFieldGame.FieldsPerDirection, MineFieldGame.FieldsPerDirection];
-            _game = new MineFieldGame(_player, mineField);
-
-            for (var i = 0; i < 8; i++)
-            {
-                for (var j = 0; j < 8; j++)
-                {
-                    mineField[i, j] = new MineField(i, j, (i == 0 && j <= 3));
-                }
-            }
+            var mineFields = CreateTestMineField(false, (0, 1), (0, 2), (0, 3));
+            _game = new MineFieldGame(_player, mineFields);
 
             for (int i = 0; i < 3; i++)
             {
@@ -147,8 +133,8 @@ namespace Game.Tests
                 Assert.That(_player.CurrentPosition.Y, Is.EqualTo(3));
                 Assert.That(_player.RemainingLives, Is.EqualTo(0));
                 Assert.That(_player.TotalMoves, Is.EqualTo(3));
-                Assert.That(_game.IsQuestCompleted, Is.EqualTo(false));
-                Assert.That(_game.IsPlayerAlive, Is.EqualTo(false));
+                Assert.That(_game.IsQuestCompleted, Is.False);
+                Assert.That(_game.IsPlayerAlive, Is.False);
             });
         }
     }
