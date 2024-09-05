@@ -1,14 +1,21 @@
-﻿namespace Game.Models
+﻿using Game.Interfaces;
+
+namespace Game.Models
 {
-    public class Player(MineField startingPosition)
+    public class Player : IPlayer
     {
         private const int TotalLives = 3;
 
         public int RemainingLives { get; private set; } = TotalLives;
         public int TotalMoves { get; private set; }
-        public MineField CurrentPosition { get; private set; } = startingPosition;
+        public MineField CurrentPosition { get; private set; }
 
-        public void Play(MineFieldGame game, ConsoleKey direction)
+        public Player(MineField startingPosition)
+        {
+            CurrentPosition = startingPosition;
+        }
+
+        public void Play(IGame game, ConsoleKey direction)
         {
             var nextPosition = GetNextPosition(direction);
 
@@ -22,7 +29,7 @@
             {
                 CurrentPosition = nextPosition;
                 TotalMoves++;
-            }            
+            }
         }
 
         public void LoseLife()
@@ -37,16 +44,16 @@
             switch (direction)
             {
                 case ConsoleKey.UpArrow:
-                    nextPosition.Y += 1;
+                    nextPosition.Y++;
                     break;
                 case ConsoleKey.DownArrow:
-                    nextPosition.Y -= 1;
+                    nextPosition.Y--;
                     break;
                 case ConsoleKey.LeftArrow:
-                    nextPosition.X -= 1;
+                    nextPosition.X--;
                     break;
                 case ConsoleKey.RightArrow:
-                    nextPosition.X += 1;
+                    nextPosition.X++;
                     break;
             }
 

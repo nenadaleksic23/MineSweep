@@ -1,11 +1,12 @@
+using Game.Interfaces;
 using Game.Models;
 
 namespace Game.Tests
 {
     public class MineFieldGameTests
     {
-        private Player _player;
-        private MineFieldGame _game;
+        private IPlayer _player;
+        private IGame _game;
 
         private static MineField[,] CreateTestMineField(bool shouldMarkAsAlreadyExploded, params (int x, int y)[] mines)
         {

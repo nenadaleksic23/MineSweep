@@ -1,8 +1,9 @@
-﻿namespace Game.Models
+﻿using Game.Interfaces;
+
+namespace Game.Models
 {
-    public class MineFieldGame(Player player, MineField[,] mineFields)
+    public class MineFieldGame(IPlayer player, MineField[,] mineFields) : IGame
     {
-        public const string Alphabet = "ABCDEFGH";
         private const int MineProbability = 30;
 
         private ConsoleKey[] _allowedKeys =
@@ -13,7 +14,7 @@
             ConsoleKey.RightArrow,
         };
 
-        public Player Player { get; init; } = player;
+        public IPlayer Player { get; init; } = player;
         public static readonly int FieldsPerDirection = 8;
         public MineField[,] MineFields { get; init; } = mineFields;
         public bool IsQuestCompleted => Player.CurrentPosition.Y == (FieldsPerDirection - 1);
@@ -103,7 +104,7 @@
         public string GetInGameStatistics()
         {
             return "---------------------------------------------\n" +
-                   $"Current player position: {Alphabet[Player.CurrentPosition.X]}-{Player.CurrentPosition.Y + 1}\n" +
+                   $"Current player position: {Player.CurrentPosition.UIPositionName}\n" +
                    $"Lifes left: {Player.RemainingLives}\n" +
                    $"Total moves: {Player.TotalMoves}\n" +
                    "---------------------------------------------\n";
