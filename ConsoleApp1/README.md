@@ -18,8 +18,7 @@
 ## Features
 
 - **Lives**: You start with a 3 lives. Each time you step on a mine, you lose one life.
-- **Mine Detection**: The game does not reveal mine locations before stepping on a tile, adding an element of surprise and strategy.
 
 ## Installation
 
-To play the game, clone the repository and build the project using the provided instructions.
+To play the game, clone the repository and build it.
