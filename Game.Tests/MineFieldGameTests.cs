@@ -1,5 +1,4 @@
 using Game.Models;
-using NUnit.Framework;
 
 namespace Game.Tests
 {
