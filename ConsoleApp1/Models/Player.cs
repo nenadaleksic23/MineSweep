@@ -2,18 +2,13 @@
 
 namespace Game.Models
 {
-    public class Player : IPlayer
+    public class Player(MineField startingPosition) : IPlayer
     {
         private const int TotalLives = 3;
 
         public int RemainingLives { get; private set; } = TotalLives;
         public int TotalMoves { get; private set; }
-        public MineField CurrentPosition { get; private set; }
-
-        public Player(MineField startingPosition)
-        {
-            CurrentPosition = startingPosition;
-        }
+        public MineField CurrentPosition { get; private set; } = startingPosition;
 
         public void Play(IGame game, ConsoleKey direction)
         {
