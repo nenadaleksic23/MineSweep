@@ -1,7 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-using ConsoleApp1.Models;
+﻿using Game.Models;
 
-Console.WriteLine("Hello, World!");
-
-Game game = new Game();
+var player = new Player();
+var mineField = MineFieldGame.GenerateMineField();
+var game = new MineFieldGame(player, mineField);
 game.Start();

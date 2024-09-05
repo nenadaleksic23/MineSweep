@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1.Models
+﻿namespace Game.Models
 {
     public class Position(int X, int Y)
     {
